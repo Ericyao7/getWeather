@@ -10,13 +10,33 @@ router.get('/', function(req, res, next) {
 
 router.get('/weather',function(req,res){
   var request = require('request');
-  var myjson;
-  request.get('http://api.openweathermap.org/data/2.5/weather?id=2172797&appid=37186a19b8a2451d4baf57b1d68c9eda', function (error, response, body) {
+  var cityName = req.query.wName;
+  var test = '2172797';
+
+  var QueryURL = 'http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=37186a19b8a2451d4baf57b1d68c9eda';
+  request.get(QueryURL, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       //res.send(body); // 输出请求到的body
-
+    /*
       var obj = JSON.parse(body);
-      res.send(obj);
+      var myString = JSON.stringify(obj.weather);
+
+      //console.log(req.query.wName);
+      res.render("weather",{json:myString,title: cityName});
+    */
+      var obj = JSON.parse(body);
+      var objMain = obj.weather[0].main;
+      var objDescription = obj.weather[0].description;
+
+      var IntTem = parseInt(obj.main.temp)-273;
+      var Tem = IntTem+"ºC"
+
+      var myString = JSON.stringify(obj.weather);
+
+      //console.log(objDescription+"    "+ objMain);
+      res.render("weather",{title: cityName,weatherDes:objMain+" "+objDescription,Temperature:Tem});
+
+
     }
   });
 
