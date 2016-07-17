@@ -6,6 +6,21 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+
+
+    <div>
+        <p>
+            Please input the city:
+        </p>
+
+        <form action="/weather" method="get">
+          <p>City Name: <input type="text" name="wName" placeholder = "City Name"/></p>
+          <input type="submit" value="Submit" />
+        </form>
+
+        </form>
+
+    </div>
+
   </body>
 </html>
