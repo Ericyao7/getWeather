@@ -3,6 +3,9 @@ var router = express.Router();
 var http = require('http');
 var request = require('request');
 
+var Guest = require('../model/guest.js');
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -11,27 +14,27 @@ router.get('/', function(req, res, next) {
 router.get('/weather',function(req,res){
   var request = require('request');
   var cityName = req.query.wName;
-  var test = '2172797';
-
   var QueryURL = 'http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=37186a19b8a2451d4baf57b1d68c9eda';
   request.get(QueryURL, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      //res.send(body); // 输出请求到的body
-    /*
+
       var obj = JSON.parse(body);
-      var myString = JSON.stringify(obj.weather);
+      var objMain;
+      var objDescription;
+      var IntTem;
+      var Tem;
+      if(obj==null){
+        objMain = "Sorry We can Not find your city";
+        console.log("we will see");
+      }else {
+        objMain = obj.weather[0].main;
 
-      //console.log(req.query.wName);
-      res.render("weather",{json:myString,title: cityName});
-    */
-      var obj = JSON.parse(body);
-      var objMain = obj.weather[0].main;
-      var objDescription = obj.weather[0].description;
+        objDescription = obj.weather[0].description;
 
-      var IntTem = parseInt(obj.main.temp)-273;
-      var Tem = IntTem+"ºC"
-
-      var myString = JSON.stringify(obj.weather);
+        IntTem = parseInt(obj.main.temp) - 273;
+        Tem = IntTem + "ºC"
+      }
+      //var myString = JSON.stringify(obj.weather);
 
       //console.log(objDescription+"    "+ objMain);
       res.render("weather",{title: cityName,weatherDes:objMain+" "+objDescription,Temperature:Tem});
@@ -41,5 +44,40 @@ router.get('/weather',function(req,res){
   });
 
 });
+
+
+router.post('/contact',function(req,res){
+  console.log("come on");
+  var name = req.body.cName,
+      email =req.body.cEmail,
+      comment = req.body.cComment;
+
+  var newGuest = new Guest({
+    name:name,
+    email:email,
+    comment:comment
+  });
+
+  //Save to DB
+
+    newGuest.save(function(err,guest){
+      if(err){
+        console.log("fail to add new comment");
+        return res.redirect('/comment');
+      }
+
+      //req.session.guest = newGuest;
+      console.log("add Successfully");
+      //req.redirect('/comment');
+
+
+    })
+  })
+
+
+
+
+
+
 
 module.exports = router;
