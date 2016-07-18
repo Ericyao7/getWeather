@@ -1,2 +1,2 @@
 # getWeather
-This is a weather forecast app programming in NodeJS
+This is a weather forecast app programming in MEAN
