@@ -7,8 +7,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var posts = require('./routes/posts');
 
-//MongoDB
+//configure for MongoDB
 var settings = require('./setting');
 
 var app = express();
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/post',posts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

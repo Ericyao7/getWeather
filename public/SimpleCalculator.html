@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<div data-ng-app>
+    Single Price： <input type="number" min=0 ng-model="price" ng-init="price = 299">
+    <br>
+    Numbers： <input type="number" min=0 ng-model="quantity" ng-init="quantity = 1">
+    <br>
+    Total Prices ： {{ quantity * price }}
+</div>
+</body>
+</html>

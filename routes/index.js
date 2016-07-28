@@ -8,7 +8,13 @@ var Guest = require('../model/guest.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  //res.render('getWeather', { title: 'GetWeather' });
+  res.sendfile('./public/index.html');
+});
+
+router.get('/getWeather', function(req, res, next) {
+  res.render('getWeather', { title: 'GetWeather' });
+  //res.sendfile('./public/index.html');
 });
 
 router.get('/weather',function(req,res){
@@ -45,7 +51,15 @@ router.get('/weather',function(req,res){
 
 });
 
+router.post('/contact',function(req,res){
+  res.sendfile('./public/about.html');
+})
 
+
+
+
+
+/*
 router.post('/contact',function(req,res){
   console.log("come on");
   var name = req.body.cName,
@@ -73,11 +87,6 @@ router.post('/contact',function(req,res){
 
     })
   })
-
-
-
-
-
-
+*/
 
 module.exports = router;
