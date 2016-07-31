@@ -12,44 +12,9 @@ router.get('/', function(req, res, next) {
   res.sendfile('./public/index.html');
 });
 
-router.get('/getWeather', function(req, res, next) {
-  res.render('getWeather', { title: 'GetWeather' });
-  //res.sendfile('./public/index.html');
-});
-
-router.get('/weather',function(req,res){
-  var request = require('request');
-  var cityName = req.query.wName;
-  var QueryURL = 'http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=37186a19b8a2451d4baf57b1d68c9eda';
-  request.get(QueryURL, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-      var obj = JSON.parse(body);
-      var objMain;
-      var objDescription;
-      var IntTem;
-      var Tem;
-      if(obj==null){
-        objMain = "Sorry We can Not find your city";
-        console.log("we will see");
-      }else {
-        objMain = obj.weather[0].main;
-
-        objDescription = obj.weather[0].description;
-
-        IntTem = parseInt(obj.main.temp) - 273;
-        Tem = IntTem + "ºC"
-      }
-      //var myString = JSON.stringify(obj.weather);
-
-      //console.log(objDescription+"    "+ objMain);
-      res.render("weather",{title: cityName,weatherDes:objMain+" "+objDescription,Temperature:Tem});
 
 
-    }
-  });
 
-});
 
 router.post('/contact',function(req,res){
   res.sendfile('./public/about.html');
